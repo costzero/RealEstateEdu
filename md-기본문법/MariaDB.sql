@@ -29,3 +29,20 @@ docker run -d
 3. 버전 확인 (결과가 10.5.29-MariaDB-... 이면 정상)
 docker exec -it mariadb105 mysql -uroot -p -e "SELECT VERSION();"
 */
+
+
+-- =====================================================================
+-- 게시판 테이블 생성
+-- 컬럼: 일련번호, 제목, 내용, 작성자, 작성일, 조회수, 작성자아이디
+-- =====================================================================
+CREATE TABLE board (
+    board_no    INT UNSIGNED  NOT NULL AUTO_INCREMENT   COMMENT '일련번호',
+    title       VARCHAR(200)  NOT NULL                  COMMENT '제목',
+    content     TEXT          NOT NULL                  COMMENT '내용',
+    writer      VARCHAR(50)   NOT NULL                  COMMENT '작성자',
+    reg_date    DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일',
+    view_count  INT UNSIGNED  NOT NULL DEFAULT 0        COMMENT '조회수',
+    writer_id   VARCHAR(50)   NOT NULL                  COMMENT '작성자아이디',
+    PRIMARY KEY (board_no),
+    KEY idx_board_writer_id (writer_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='게시판';
